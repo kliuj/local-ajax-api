@@ -2,20 +2,28 @@
 <div class="name">
 	<span class="namespan">API名称</span>
 	<div class="ti1">
-		<input type="text" id="apiname" class="nameinput" placeholder="中文数据接口名称，用于首页显示" >
+		<%if(isEdit){%>
+			<input type="text" id="apiname" class="nameinput" value="<%=stringValueJson.name%>" >
+		<%}else{%>	
+			<input type="text" id="apiname" class="nameinput" placeholder="中文数据接口名称，用于首页显示" >
+		<%}%>
 	</div>
 </div>	
 <div class="name">	
 	<span class="namespan">API url</span>
 	<div class="ti1">
-		<input type="text" id="apiurl" class="nameinput" placeholder="英文APIurl，用于获取数据，http://localhost:3000/getjson/APIurl" >
+		<%if(isEdit){%>
+			<input type="text" id="apiurl" class="nameinput" value="<%=stringValueJson.url%>" >
+		<%}else{%>	
+			<input type="text" id="apiurl" class="nameinput" placeholder="英文APIurl，用于获取数据，http://localhost:3000/getjson/APIurl" >
+		<%}%>
 	</div>
 </div>	
 	<div class="edit">
 		<div class="edit_left">
 			<em>String<i class="notice"> ( key需要双引号 例如{"a":1} )</i></em>
 			<%if(isEdit){%>
-				<textarea class="string-edit" id="stringValue"><%=stringValueJson%></textarea>
+				<textarea class="string-edit" id="stringValue"><%=stringValueJson.detail%></textarea>
 			<%}else{%>	
 				<textarea class="string-edit" id="stringValue"></textarea>
 			<%}%>
@@ -71,11 +79,16 @@
 		var stringValue = document.getElementById("stringValue").value,
 			apiname = document.getElementById("apiname").value.replace(/\s/g,"");
 			apiurl = document.getElementById("apiurl").value.replace(/\s/g,"");
+		if(!apiname || !apiurl)	{
+			alert("API名称和url为必填");
+			return false;
+		}
 		$.ajax({
 			url:'/save',
 			type:'post',
 			data:{
 				'name':apiurl,
+				'url':apiurl,	
 				'data':JSON.stringify({
 					name:apiname,
 					url:apiurl,

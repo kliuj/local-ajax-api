@@ -46,20 +46,41 @@ module.exports = function(app){
 	//存储json
 	app.post('/save',function(req,res){
 		//文件名称
-	  var fileName = req.body.name,
+	  var fileName = req.body.name.replace(/\s/g,""),
+	  	  jsonUrl = req.body.url.replace(/\s/g,""),	
 	  	  jsonString = req.body.data,	
-	  	  jsonName = './public/jsonFile/'+fileName+'.json';		  
-	  var read = new Promise(function(resolve,reject){
-	  		resolve(fs.writeFileSync(jsonName,jsonString))
-	  }); 		
-	  read.then(function(response){
-	  	res.json({a:'ok'})
-	  }).catch(function(response){
-	  	res.render('noresult')
-	  })  
+	  	  jsonName = './public/jsonFile/'+fileName+'.json';
+	  if(fileName && jsonUrl){
+	  	 var read = new Promise(function(resolve,reject){
+		  		resolve(fs.writeFileSync(jsonName,jsonString))
+		  }); 		
+		  read.then(function(response){
+		  	res.json({success:true})
+		  }).catch(function(response){
+		  	res.json({success:false})
+		  }) 
+	  }else{
+	  	res.json({success:false,msg:"名称或url不能为空"})
+	  }	  		  
+	   
 	})
 	//编辑接口页面
-	app.get('/edit',function(req,res){
-		res.render('create',{isEdit:true,stringValueJson:'{"a":1}'})
+	app.get('/edit/:filename',function(req,res){
+			//文件名称
+		  var fileName = req.params.filename,
+		  	  jsonName = './public/jsonFile/'+fileName+'.json';
+		  if(!fileName){
+		  	res.redirect('/')
+		  }else{
+		  	  var read = new Promise(function(resolve,reject){
+			  		resolve(fs.readFileSync(jsonName))
+			  }); 		
+			  read.then(function(response){
+			  	res.render('create',{isEdit:true,stringValueJson:JSON.parse(response)})
+			  }).catch(function(response){
+			  	res.render('noresult')
+			  })  
+		  }	  			
+		  
 	})	
 }
