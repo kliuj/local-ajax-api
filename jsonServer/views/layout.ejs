@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>前端接口可视化工具</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="/lib/zepto.js"></script>
+  </head>
+  <body>
+  	<div id="header">
+  		<div class="header-name">
+  			<a href="/" style="color:#fff"><h1>前端接口可视化工具</h1></a>
+        <div class="search-tab">
+          <a href="/create"  class="create-btn act">
+            创建新接口
+          </a>
+          <span class="search-btn">
+            本地接口搜索
+          </span>
+          <input class="search" placeholder="输入接口名称">
+        </div>
+  		</div>
+  	</div>
+    <div class="container">
+       <%- body %>
+    </div>
+  </body>
+</html>

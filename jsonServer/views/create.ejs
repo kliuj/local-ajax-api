@@ -1,0 +1,90 @@
+<div style="font-size:25px;font-weight:bold;color:#666;line-height:60px;height:60px;">创建一个API</div>
+<div class="name">
+	<span class="namespan">API名称</span>
+	<div class="ti1">
+		<input type="text" id="apiname" class="nameinput" placeholder="中文数据接口名称，用于首页显示" >
+	</div>
+</div>	
+<div class="name">	
+	<span class="namespan">API url</span>
+	<div class="ti1">
+		<input type="text" id="apiurl" class="nameinput" placeholder="英文APIurl，用于获取数据，http://localhost:3000/getjson/APIurl" >
+	</div>
+</div>	
+	<div class="edit">
+		<div class="edit_left">
+			<em>String<i class="notice"> ( key需要双引号 例如{"a":1} )</i></em>
+			<%if(isEdit){%>
+				<textarea class="string-edit" id="stringValue"><%=stringValueJson%></textarea>
+			<%}else{%>	
+				<textarea class="string-edit" id="stringValue"></textarea>
+			<%}%>
+		</div>
+		<button  id="view-btn">点击预览</button>
+		<div class="edit_left">
+			<em>
+				JSON
+				<i class="notice">( 仅供参考，建议用网上更强大的工具预览JSON )</i>
+			</em>	
+			<pre id="result" class="json-show" >
+
+    		</pre>
+		</div>
+	</div>
+	<div class="info">
+		<p>接口描述</p>
+		<textarea class="info-edit" placeholder="参数说明"></textarea>
+	</div>
+	<div style="text-align:center">
+		<a class="ok-btn act" id="ok-btn">编辑ok，保存接口</a>
+	</div>
+<script>
+	//记录被改变状态
+	var changed = true;  
+    function syntaxHighlight(json) {
+	    if (typeof json != 'string') {
+	        json = JSON.stringify(json, undefined, 2);
+	    }
+	    json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+	    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+	        var cls = 'number';
+	        if (/^"/.test(match)) {
+	            if (/:$/.test(match)) {
+	                cls = 'key';
+	            } else {
+	                cls = 'string';
+	            }
+	        } else if (/true|false/.test(match)) {
+	            cls = 'boolean';
+	        } else if (/null/.test(match)) {
+	            cls = 'null';
+	        }
+	        return '<span class="' + cls + '">' + match + '</span>';
+	    });
+	}
+	document.getElementById("view-btn").addEventListener("click",function(){
+		var stringValue = document.getElementById("stringValue").value;
+		console.log(stringValue)
+		document.getElementById("result").innerHTML = syntaxHighlight(JSON.parse(stringValue))
+	})
+	document.getElementById("ok-btn").addEventListener("click",function(){
+		var stringValue = document.getElementById("stringValue").value,
+			apiname = document.getElementById("apiname").value.replace(/\s/g,"");
+			apiurl = document.getElementById("apiurl").value.replace(/\s/g,"");
+		$.ajax({
+			url:'/save',
+			type:'post',
+			data:{
+				'name':apiurl,
+				'data':JSON.stringify({
+					name:apiname,
+					url:apiurl,
+					detail:stringValue
+				})
+			},
+			success:function(){
+				alert('保存ok')
+			}
+		})
+	})
+</script>

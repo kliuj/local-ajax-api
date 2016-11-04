@@ -1,0 +1,15 @@
+<div class="index">
+	<%if(haveList){%>
+		<div style="height:60px;line-height:60px;font-size:25px;">接口列表</div>
+		<ul class="searchlist">
+			<%list.forEach(function(item,index){%>
+				<li>
+					<a href="getjson/<%=item.url%>" target="_blank"><%= item.name%></a>
+				</li>
+			<%})%>	
+		</ul>
+	<%}else{%>
+		<p>本地没有找到任何已存在接口，点击右上角创建一个新接口</p>
+	<%}%>
+	
+</div>

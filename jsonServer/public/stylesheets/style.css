@@ -1,0 +1,232 @@
+body {
+  font: 16px microsoft yahei, simsun, sans-serif;
+}
+*{
+	font-size: 100%; margin:0;padding: 0;
+}
+a{
+	text-decoration:none;
+}
+ul,li{
+	list-style: none
+}
+#header{
+	height: 80px;
+    line-height: 80px;
+    color: #fff;
+    margin-bottom: 25px;
+    overflow: hidden;
+    background: #2e74c3;
+    box-shadow: 0px 0px 10px 0px #000;
+}
+.header-name{
+	width: 1200px;
+	margin:0 auto;
+	height: 80px;
+	position: relative;
+}
+#header h1 {
+    float: left;
+    padding-right: 20px;
+    margin-top: 23px;
+    line-height: 34px;
+    border-right: 4px solid #fff;
+    display: inline-block;
+}
+.create-btn{
+	margin-left: 40px;
+	color:#fff;
+    padding: 10px 20px; 
+    background-color:#ff9a14 ;
+    height: 30px;
+    line-height: 30px;
+    float: right;
+    font-size: 20px;
+    
+}
+.act{
+	-webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+.act:hover{
+	transform:scale(1.2);    
+	-webkit-transform:scale(1.2);    
+	-moz-transform:scale(1.2);    
+	-o-transform:scale(1.2);    
+	-ms-transform:scale(1.2);
+}
+.search-tab{
+	float: right;
+	height: 50px;
+	margin-top: 15px
+}
+.search-btn{
+	margin-left: 10px;
+    background-color: #fff;
+    padding: 8px 14px;
+    height: 20px;
+    color: #333;
+    line-height: 20px;
+    margin-top: 7px;
+    float: right;
+    cursor: pointer;
+}
+.search{
+	margin-left: 10px;
+    background-color: #fff;
+    padding: 8px 14px;
+    height: 20px;
+    color: #333;
+    line-height: 20px;
+    margin-top: 4px;
+    float: right;
+    width: 500px;
+    border: 3px solid #cbcbcb;
+}
+.container{
+	width: 1200px;
+	margin:0 auto;
+}
+.searchlist li{
+	height: 80px;
+	width: 396px;
+	box-sizing: border-box;
+	padding: 10px;
+	display: inline-block;
+}
+.searchlist li >a{
+	height:60px;
+	width: 380px;
+	background-color: #75caf4;
+	display: block;
+	cursor: pointer;
+	overflow: hidden;
+	color:#fff;
+	padding: 10px;
+	line-height: 40px;
+	box-sizing: border-box;
+}
+.searchlist li >a:hover{
+	 background: #5b5b5b;
+
+}
+.name{
+	height: 80px;
+	margin-bottom: 10px;
+}
+.namespan{
+	height: 80px;
+	width: 200px;
+	line-height: 80px;
+	background-color: #83b157;
+	display: inline-block;
+	color:#fff;
+	text-align: center;
+	font-size: 25px
+}
+.ti1{
+	float: right;
+    width: 1000px;
+    background-color: #454545;
+    height: 80px
+}
+.nameinput{
+	height: 80px;
+	border: 0px solid transparent;
+    background-color: transparent;
+    font-size: 20px;
+    padding: 25px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    display: inline-block;
+    color: #fff;
+    outline: none
+}
+.edit{
+	width: 1200px;
+	height:700px;
+	border: 3px solid #cbcbcb;
+	box-sizing: border-box;
+	margin-top: 10px
+}
+.edit_left{
+	width: 590px;
+	padding: 10px 20px;
+	display: inline-block;
+	box-sizing: border-box;
+}
+.edit_left em{
+	font-size: 25px;
+	text-align: center;
+	display: block;
+	line-height: 50px
+}
+.notice{
+	font-size: 12px;
+	line-height: 50px;
+	font-style: normal;
+	color:#DF5B6D;
+}
+.string-edit{
+	display: block;
+	width: 490px;
+	height: 600px;
+	margin:0;
+	padding: 5px;
+}
+.json-show{
+	border: 1px solid #cbcbcb;
+    width: 100%;
+    height: 610px;
+    margin: 0;
+    padding: 5px;
+    box-sizing: border-box;
+    float: right;
+    overflow: auto;
+}
+.info p{
+	font-size: 25px;
+	padding: 5px 
+}
+.info-edit{
+	display: block;
+	width: 1190px;
+	height: 100px;
+	margin:0;
+	padding: 5px;
+}
+.ok-btn{
+	font-size: 18px;
+    padding: 22px 75px;
+    background: #ff9a14;
+    margin:50px auto;
+    color:#fff;
+    text-align: center;
+    box-sizing: border-box;
+    display: inline-block;
+    cursor: pointer;
+}
+#view-btn{
+	height: 30px;
+	width: 100px;
+	position: absolute;
+	margin-left: -76px;
+	background-color: #83b157;
+	border: none;
+	border-radius: 4;
+	color:#fff;
+	cursor: pointer;
+	margin-top: 20px;
+	outline: none
+}
+#view-btn:active{
+	background-color: #5B8C2C;
+}
+ pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+    .string { color: green; }
+    .number { color: darkorange; }
+    .boolean { color: blue; }
+    .null { color: magenta; }
+    .key { color: red; }
