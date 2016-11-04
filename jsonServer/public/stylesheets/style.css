@@ -36,13 +36,13 @@ ul,li{
 .create-btn{
 	margin-left: 40px;
 	color:#fff;
-    padding: 10px 20px; 
+    padding: 10px 20px;
     background-color:#ff9a14 ;
     height: 30px;
     line-height: 30px;
     float: right;
     font-size: 20px;
-    
+
 }
 .act{
 	-webkit-transition-property: transform;
@@ -51,10 +51,10 @@ ul,li{
     transition: 0.3s;
 }
 .act:hover{
-	transform:scale(1.2);    
-	-webkit-transform:scale(1.2);    
-	-moz-transform:scale(1.2);    
-	-o-transform:scale(1.2);    
+	transform:scale(1.2);
+	-webkit-transform:scale(1.2);
+	-moz-transform:scale(1.2);
+	-o-transform:scale(1.2);
 	-ms-transform:scale(1.2);
 }
 .search-tab{
@@ -96,8 +96,8 @@ ul,li{
 	padding: 10px;
 	display: inline-block;
 }
-.searchlist li >a{
-	height:60px;
+.item{
+	height:100px;
 	width: 380px;
 	background-color: #75caf4;
 	display: block;
@@ -108,9 +108,17 @@ ul,li{
 	line-height: 40px;
 	box-sizing: border-box;
 }
-.searchlist li >a:hover{
-	 background: #5b5b5b;
-
+.item>p{
+  width: 360px;
+  height: 50px;
+  line-height: 50px;
+}
+.view{
+  color:#fff;
+  width: 180px;
+  display: inline-block;
+  float: left;
+  text-align: center;
 }
 .name{
 	height: 80px;
@@ -156,6 +164,7 @@ ul,li{
 	padding: 10px 20px;
 	display: inline-block;
 	box-sizing: border-box;
+
 }
 .edit_left em{
 	font-size: 25px;
@@ -175,9 +184,10 @@ ul,li{
 	height: 600px;
 	margin:0;
 	padding: 5px;
+    outline: 1px solid #ccc;
+    border: 1px solid #ccc;
 }
 .json-show{
-	border: 1px solid #cbcbcb;
     width: 100%;
     height: 610px;
     margin: 0;
@@ -188,7 +198,7 @@ ul,li{
 }
 .info p{
 	font-size: 25px;
-	padding: 5px 
+	padding: 5px
 }
 .info-edit{
 	display: block;
@@ -224,9 +234,32 @@ ul,li{
 #view-btn:active{
 	background-color: #5B8C2C;
 }
- pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
-    .string { color: green; }
-    .number { color: darkorange; }
-    .boolean { color: blue; }
-    .null { color: magenta; }
-    .key { color: red; }
+ pre {outline: 2px solid #ccc; padding: 5px; margin: 5px; }
+.string { color: green; }
+.number { color: darkorange; }
+.boolean { color: blue; }
+.null { color: magenta; }
+.key { color: red; }
+
+.bottom{
+  margin-top: 100px;
+  padding:0 50px ;
+  box-sizing: border-box;
+}
+.morelink{
+    color: #fff;
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: 0;
+    height: 30px;
+    display: inline-block;
+    padding-left: 40px;
+    line-height: 30px;
+    margin-right: 50px
+}
+.guide{
+  background-image: url(../images/guide.png);
+}
+.github{
+  background-image: url(../images/github.png);
+}

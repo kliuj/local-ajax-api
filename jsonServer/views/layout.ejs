@@ -1,27 +1,50 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>前端接口可视化工具</title>
+    <title>前端接口可视化创建工具</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script type="text/javascript" src="/lib/zepto.js"></script>
+    <script>
+      //搜索
+      function submitSearch(){
+        var keyword =document.getElementById("search").value.replace(/\s/g,"");
+        if(keyword){
+          location.href='/search/'+keyword;
+        }else {
+          alert("输入要查找的内容")
+        }
+      }
+      function keyForm(event){
+        event.keyCode == 13 && submitSearch()
+      }
+    </script>
   </head>
   <body>
   	<div id="header">
   		<div class="header-name">
-  			<a href="/" style="color:#fff"><h1>前端接口可视化工具</h1></a>
+  			<a href="/" style="color:#fff"><h1>前端接口可视化创建工具</h1></a>
         <div class="search-tab">
           <a href="/create"  class="create-btn act">
             创建新接口
           </a>
-          <span class="search-btn">
+          <span class="search-btn" onclick="submitSearch()">
             本地接口搜索
           </span>
-          <input class="search" placeholder="输入接口名称">
+          <input class="search" id="search" placeholder="输入接口中文名称或英文url" onkeyup="keyForm.call(this,event)">
+
         </div>
   		</div>
   	</div>
     <div class="container">
        <%- body %>
+    </div>
+    <div  id="header" class="bottom header-name">
+      <a href="/"  class="guide morelink act">
+        使用指南
+      </a>
+      <a href="/"  class="github morelink act">
+        fork me on github
+      </a>
     </div>
   </body>
 </html>

@@ -4,27 +4,27 @@
 	<div class="ti1">
 		<%if(isEdit){%>
 			<input type="text" id="apiname" class="nameinput" value="<%=stringValueJson.name%>" >
-		<%}else{%>	
-			<input type="text" id="apiname" class="nameinput" placeholder="中文数据接口名称，用于首页显示" >
+		<%}else{%>
+			<input type="text" id="apiname" class="nameinput" placeholder="中文数据接口名称，用于首页显示和搜索" >
 		<%}%>
 	</div>
-</div>	
-<div class="name">	
+</div>
+<div class="name">
 	<span class="namespan">API url</span>
 	<div class="ti1">
 		<%if(isEdit){%>
 			<input type="text" id="apiurl" class="nameinput" value="<%=stringValueJson.url%>" >
-		<%}else{%>	
-			<input type="text" id="apiurl" class="nameinput" placeholder="英文APIurl，用于获取数据，http://localhost:3000/getjson/APIurl" >
+		<%}else{%>
+			<input type="text" id="apiurl" class="nameinput" placeholder="英文APIurl，用于获取数据，http://localhost:3000/getjson/APIurl，不能重复" >
 		<%}%>
 	</div>
-</div>	
+</div>
 	<div class="edit">
 		<div class="edit_left">
 			<em>String<i class="notice"> ( key需要双引号 例如{"a":1} )</i></em>
 			<%if(isEdit){%>
 				<textarea class="string-edit" id="stringValue"><%=stringValueJson.detail%></textarea>
-			<%}else{%>	
+			<%}else{%>
 				<textarea class="string-edit" id="stringValue"></textarea>
 			<%}%>
 		</div>
@@ -33,22 +33,18 @@
 			<em>
 				JSON
 				<i class="notice">( 仅供参考，建议用网上更强大的工具预览JSON )</i>
-			</em>	
+			</em>
 			<pre id="result" class="json-show" >
 
     		</pre>
 		</div>
 	</div>
-	<div class="info">
-		<p>接口描述</p>
-		<textarea class="info-edit" placeholder="参数说明"></textarea>
-	</div>
 	<div style="text-align:center">
-		<a class="ok-btn act" id="ok-btn">编辑ok，保存接口</a>
+		<a class="ok-btn act" id="ok-btn">编辑完成，保存接口</a>
 	</div>
 <script>
 	//记录被改变状态
-	var changed = true;  
+	var changed = true;
     function syntaxHighlight(json) {
 	    if (typeof json != 'string') {
 	        json = JSON.stringify(json, undefined, 2);
@@ -87,8 +83,8 @@
 			url:'/save',
 			type:'post',
 			data:{
-				'name':apiurl,
-				'url':apiurl,	
+				'name':apiname,
+				'url':apiurl,
 				'data':JSON.stringify({
 					name:apiname,
 					url:apiurl,
@@ -96,7 +92,10 @@
 				})
 			},
 			success:function(){
-				alert('保存ok')
+				alert('保存成功')
+			},
+			error:function(){
+				alert("保存失败，请重试！")
 			}
 		})
 	})

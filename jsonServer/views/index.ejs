@@ -4,12 +4,16 @@
 		<ul class="searchlist">
 			<%list.forEach(function(item,index){%>
 				<li>
-					<a href="getjson/<%=item.url%>" target="_blank"><%= item.name%></a>
+					<div class="item">
+						<p><%= item.name%></p>
+						<a href="/getjson/<%=item.url%>" target="_blank" class="view act">查看结果</a>
+						<a href="/edit/<%=item.url%>" target="_blank" class="view act">重新编辑</a>
+					</div>
 				</li>
-			<%})%>	
+			<%})%>
 		</ul>
 	<%}else{%>
 		<p>本地没有找到任何已存在接口，点击右上角创建一个新接口</p>
 	<%}%>
-	
+
 </div>
