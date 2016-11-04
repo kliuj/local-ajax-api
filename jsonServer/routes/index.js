@@ -65,7 +65,7 @@ module.exports = function(app){
 	  		resolve(fs.readFileSync(jsonName))
 	  });
 	  read.then(function(response){
-	  	res.json(JSON.parse(response))
+	  	res.json(JSON.parse(response).detail)
 	  }).catch(function(response){
 	  	res.render('noresult')
 	  })
