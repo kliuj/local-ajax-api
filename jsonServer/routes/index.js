@@ -6,7 +6,6 @@
 var fs = require('fs')
 
 function saveName(name,url){
-	console.log(name)
 	//存储文件名和url到ajaxapilist文件
 	var jsonName = './public/jsonfile/ajaxapilist.json',
 			read = new Promise(function(resolve,reject){
