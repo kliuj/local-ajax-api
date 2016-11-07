@@ -144,4 +144,29 @@ module.exports = function(app){
 			res.render('index', { haveList: false, list:[]})
 		})
 	})
+	//判断是否重复
+	app.get('/repeat',function(req,res){
+		var apiurl = req.query.apiurl.replace(/\s/g,""),
+				jsonName = './public/jsonfile/ajaxapilist.json',
+				read = new Promise(function(resolve,reject){
+						resolve(fs.readFileSync(jsonName))
+				});
+		read.then(function(response){
+			response = JSON.parse(response);
+			if(response.dataList){
+				var list = response.dataList;
+				for(var i = 0;i<list.length;i++){
+					if(list[i].url  == apiurl){
+							res.json({ repeat: true,success:true});
+							return
+					}
+				}
+				res.json({ repeat: false,success:true})
+			}else{
+				res.json({ repeat: false,success:true})
+			}
+		}).catch(function(response){
+			res.json({ repeat: false,success:true})
+		})
+	})
 }

@@ -13,43 +13,44 @@
 	<span class="namespan">API url</span>
 	<div class="ti1">
 		<%if(isEdit){%>
-			<input type="text" id="apiurl" class="nameinput" value="<%=stringValueJson.url%>" >
+			<input type="text" id="apiurl" class="nameinput" value="<%=stringValueJson.url%>" onblur="checkApiUrl(<%=stringValueJson.url%>)">
 		<%}else{%>
-			<input type="text" id="apiurl" class="nameinput" placeholder="英文APIurl，用于获取数据，http://localhost:3000/getjson/APIurl，不能重复" >
+			<input type="text" id="apiurl" onblur="checkApiUrl()" class="nameinput" placeholder="英文APIurl，用于获取数据，http://localhost:3000/getjson/APIurl，不能重复" >
 		<%}%>
 	</div>
 </div>
-	<div class="edit">
-		<div class="edit_left">
-			<em>String<i class="notice"> ( key需要双引号 例如{"a":1} )</i></em>
-			<%if(isEdit){%>
-				<textarea class="string-edit" id="stringValue"><%=stringValueJson.detail%></textarea>
-			<%}else{%>
-				<textarea class="string-edit" id="stringValue"></textarea>
-			<%}%>
-		</div>
-		<button  id="view-btn">点击预览</button>
-		<div class="edit_left">
-			<em>
-				JSON
-				<i class="notice">( 仅供参考，建议用网上更强大的工具预览JSON )</i>
-			</em>
-			<pre id="result" class="json-show" >
-
-    		</pre>
-		</div>
-	</div>
-	<div class="apiInfo">接口备注</div>
-	<div>
+<p id="warn">提示：此API url 已经存在，继续保存将会覆盖！</p>
+<div class="edit">
+	<div class="edit_left">
+		<em>String<i class="notice"> ( key需要双引号 例如{"a":1} )</i></em>
 		<%if(isEdit){%>
-			<textarea  id="api-introduce"><%=stringValueJson.apiInfo%></textarea>
+			<textarea class="string-edit" id="stringValue"><%=stringValueJson.detail%></textarea>
 		<%}else{%>
-			<textarea id="api-introduce" placeholder="填写接口的备注信息"></textarea>
+			<textarea class="string-edit" id="stringValue"></textarea>
 		<%}%>
 	</div>
-	<div style="text-align:center">
-		<a class="ok-btn act" id="ok-btn">编辑完成，保存接口</a>
+	<button  id="view-btn">点击预览</button>
+	<div class="edit_left">
+		<em>
+			JSON
+			<i class="notice">( 仅供参考，建议用网上更强大的工具预览JSON )</i>
+		</em>
+		<pre id="result" class="json-show" >
+
+  		</pre>
 	</div>
+</div>
+<div class="apiInfo">接口备注</div>
+<div>
+	<%if(isEdit){%>
+		<textarea  id="api-introduce"><%=stringValueJson.apiInfo%></textarea>
+	<%}else{%>
+		<textarea id="api-introduce" placeholder="填写接口的备注信息"></textarea>
+	<%}%>
+</div>
+<div style="text-align:center">
+	<a class="ok-btn act" id="ok-btn">编辑完成，保存接口</a>
+</div>
 <script>
 	//记录被改变状态
 	var changed = true;
@@ -90,6 +91,21 @@
 		}
 		document.getElementById("result").innerHTML = syntaxHighlight(stringValue)
 	})
+	function checkApiUrl(oldUrl) {
+		var apiurl = document.getElementById("apiurl").value.replace(/\s/g,"")
+		$.ajax({
+			url:'/repeat',
+			type:'get',
+			data:{apiurl:apiurl},
+			success:function(data){
+				if(data.repeat && apiurl != oldUrl){
+					document.getElementById("warn").style.display ='block'
+				}else{
+					document.getElementById("warn").style.display ='none'
+				}
+			}
+		})
+	}
 	document.getElementById("ok-btn").addEventListener("click",function(){
 		var stringValue = document.getElementById("stringValue").value,
 			apiname = document.getElementById("apiname").value.replace(/\s/g,"");
