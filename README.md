@@ -1,6 +1,6 @@
 ## 使用 NodeJs 实现本地接口系统，`解决前后端合作开发最后一公里` ##
 无数据库的情况下，实现数据持久化，通过`api url`返回`json` 数据，提高前端开发效率！
-项目地址  ：[local-ajax-api][1]  下载完成安装依赖就可使用
+项目地址  ：[local-ajax-api][1]  下载完成安装依赖就可使用 
 ## 背景 ##
 前端开发工作中一个重头戏就是和后台实现数据交互。很多前端入门不久的同学（譬如我）在涉及到和后台交互的时候，都需要等待后端开发做好，给了数据才可以继续，就是所谓的串行开发。
 
@@ -35,7 +35,7 @@
 
  1. `github`下载源码，并执行 `npm install` 安装
  2. 启动node服务，`node app.js`。  （建议使用 `supervisor app.js` 可以自行重启服务，通过`npm install supervisor -g`  安装模块）
- 3. 打开首页  http://localhost:3000/ 
+ 3. 打开首页  http://localhost:3000/  建议用chrome访问
  
    ![image](https://github.com/kliuj/local-ajax-api/blob/master/jsonServer/public/images/3.jpg)
    
