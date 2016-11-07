@@ -1,4 +1,4 @@
-<div style="font-size:25px;font-weight:bold;color:#666;line-height:60px;height:60px;">创建一个API</div>
+<div class="apiInfo">创建一个API</div>
 <div class="name">
 	<span class="namespan">API名称</span>
 	<div class="ti1">
@@ -39,6 +39,14 @@
     		</pre>
 		</div>
 	</div>
+	<div class="apiInfo">接口备注</div>
+	<div>
+		<%if(isEdit){%>
+			<textarea  id="api-introduce"><%=stringValueJson.apiInfo%></textarea>
+		<%}else{%>
+			<textarea id="api-introduce" placeholder="填写接口的备注信息"></textarea>
+		<%}%>
+	</div>
 	<div style="text-align:center">
 		<a class="ok-btn act" id="ok-btn">编辑完成，保存接口</a>
 	</div>
@@ -67,9 +75,20 @@
 	    });
 	}
 	document.getElementById("view-btn").addEventListener("click",function(){
-		var stringValue = document.getElementById("stringValue").value;
-		console.log(stringValue)
-		document.getElementById("result").innerHTML = syntaxHighlight(JSON.parse(stringValue))
+		var _dom = document.getElementById("stringValue")
+				stringValue = null;
+		try{
+			stringValue = JSON.parse(_dom.value);
+		}
+		catch(err){
+ 			_dom.select(); // 选择对象
+  		document.execCommand("Copy"); // 执行浏览器复制命令
+			if(confirm("json格式有误，已复制到剪贴板，是否去检查格式?")){
+				window.open("http://www.bejson.com/")
+			}
+			return false
+		}
+		document.getElementById("result").innerHTML = syntaxHighlight(stringValue)
 	})
 	document.getElementById("ok-btn").addEventListener("click",function(){
 		var stringValue = document.getElementById("stringValue").value,
@@ -88,6 +107,7 @@
 				'data':JSON.stringify({
 					name:apiname,
 					url:apiurl,
+					apiInfo:document.getElementById("api-introduce").value,
 					detail:stringValue
 				})
 			},
