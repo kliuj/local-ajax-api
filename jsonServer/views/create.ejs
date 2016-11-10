@@ -1,3 +1,4 @@
+
 <div class="apiInfo">创建一个API</div>
 <div class="name">
 	<span class="namespan">API名称</span>
@@ -24,20 +25,45 @@
 	<div class="edit_left">
 		<em>String<i class="notice"> ( key需要双引号 例如{"a":1} )</i></em>
 		<%if(isEdit){%>
-			<textarea class="string-edit" id="stringValue"><%=stringValueJson.detail%></textarea>
+			<textarea class="string-edit J x P" id="eT"><%=stringValueJson.detail%></textarea>
 		<%}else{%>
-			<textarea class="string-edit" id="stringValue"></textarea>
+			<textarea class="string-edit J x P" id="eT"></textarea>
 		<%}%>
 	</div>
-	<button  id="view-btn">点击预览</button>
 	<div class="edit_left">
 		<em>
 			JSON
 			<i class="notice">( 仅供参考，建议用网上更强大的工具预览JSON )</i>
 		</em>
-		<pre id="result" class="json-show" >
+		<!-- <pre id="result" class="json-show" >
 
-  		</pre>
+  		</pre> -->
+			<div class="K F json-show" id="fU" >
+				<div class="y Q">
+                    <div class="C A" id="hW">
+                    </div>
+                    <div class="C B" id="kZ">
+                    </div>
+                </div>
+
+          <div class="z L">
+              <div class="E" id="dS" style="width:550px;overflow-y:scroll;height:572px">
+                  <div class="C A" >
+                      <div class="w">
+                          <div class="P" id="iX">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="C B">
+                      <div class="w D">
+                          <div class="P" id="lA">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
 	</div>
 </div>
 <div class="apiInfo">接口备注</div>
@@ -51,46 +77,26 @@
 <div style="text-align:center">
 	<a class="ok-btn act" id="ok-btn">编辑完成，保存接口</a>
 </div>
+<script src="/lib/json_parse.js"></script>
 <script>
 	//记录被改变状态
 	var changed = true;
-    function syntaxHighlight(json) {
-	    if (typeof json != 'string') {
-	        json = JSON.stringify(json, undefined, 2);
-	    }
-	    json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
-	    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
-	        var cls = 'number';
-	        if (/^"/.test(match)) {
-	            if (/:$/.test(match)) {
-	                cls = 'key';
-	            } else {
-	                cls = 'string';
-	            }
-	        } else if (/true|false/.test(match)) {
-	            cls = 'boolean';
-	        } else if (/null/.test(match)) {
-	            cls = 'null';
-	        }
-	        return '<span class="' + cls + '">' + match + '</span>';
-	    });
-	}
-	document.getElementById("view-btn").addEventListener("click",function(){
-		var _dom = document.getElementById("stringValue")
-				stringValue = null;
-		try{
-			stringValue = JSON.parse(_dom.value);
-		}
-		catch(err){
- 			_dom.select(); // 选择对象
-  		document.execCommand("Copy"); // 执行浏览器复制命令
-			if(confirm("json格式有误，已复制到剪贴板，是否去检查格式?")){
-				window.open("http://www.bejson.com/")
-			}
-			return false
-		}
-		document.getElementById("result").innerHTML = syntaxHighlight(stringValue)
-	})
+	// document.getElementById("view-btn").addEventListener("click",function(){
+	// 	var _dom = document.getElementById("eT")
+	// 			stringValue = null;
+	// 	try{
+	// 		stringValue = JSON.parse(_dom.value);
+	// 	}
+	// 	catch(err){
+ // 			_dom.select(); // 选择对象
+  // 		document.execCommand("Copy"); // 执行浏览器复制命令
+	// 		if(confirm("json格式有误，已复制到剪贴板，是否去检查格式?")){
+	// 			window.open("http://www.bejson.com/")
+	// 		}
+	// 		return false
+	// 	}
+	// 	document.getElementById("result").innerHTML = syntaxHighlight(stringValue)
+	// })
 	function checkApiUrl(oldUrl) {
 		var apiurl = document.getElementById("apiurl").value.replace(/\s/g,"")
 		$.ajax({
@@ -107,7 +113,7 @@
 		})
 	}
 	document.getElementById("ok-btn").addEventListener("click",function(){
-		var stringValue = document.getElementById("stringValue").value,
+		var stringValue = document.getElementById("eT").value,
 			apiname = document.getElementById("apiname").value.replace(/\s/g,"");
 			apiurl = document.getElementById("apiurl").value.replace(/\s/g,"");
 		if(!apiname || !apiurl)	{

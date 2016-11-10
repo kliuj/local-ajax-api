@@ -194,10 +194,9 @@ ul,li{
     width: 100%;
     height: 610px;
     margin: 0;
-    padding: 5px;
+    /*padding: 5px;*/
     box-sizing: border-box;
     float: right;
-    overflow: auto;
 }
 .info p{
 	font-size: 25px;
@@ -278,4 +277,6 @@ ul,li{
   line-height: 20px;
   display: none;
   position: absolute;
+}
+.K{
 }
