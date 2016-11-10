@@ -1,5 +1,13 @@
 ## 使用 NodeJs 实现本地接口系统，`解决前后端合作开发最后一公里` ##
 无数据库的情况下，实现数据持久化，通过`api url`返回`json` 数据，提高前端开发效率！
+## 实现功能 ##
+ 1. 完整的操作页面
+ 2. 首页展示所有保存的接口列表
+ 3. 创建的接口保存到本地
+ 4. 支持重新编辑
+ 5. 编辑过程实时预览和错误提示
+ 6. 根据接口名称或者url进行检索
+ 7. 提供url跨域调用
 ## 前言 ##
 项目地址  ：[local-ajax-api][1]  下载完成安装依赖就可使用 。
 我建议直接在chrome浏览器加上   --disable-web-security 解决本地跨域问题 一劳永逸
@@ -13,7 +21,7 @@
 ## 方案 ##
 上面的问题可以有多种解决方案
 
- 1. 直接代码里面js本地造数据 
+ 1. 直接代码里面js本地造数据
 
     ```
     ...
@@ -38,15 +46,15 @@
  1. `github`下载源码，并执行 `npm install` 安装
  2. 启动node服务，`node app.js`。  （建议使用 `supervisor app.js` 可以自行重启服务，通过`npm install supervisor -g`  安装模块）
  3. 打开首页  http://localhost:3000/  建议用chrome访问
- 
+
    ![image](https://github.com/kliuj/local-ajax-api/blob/master/jsonServer/public/images/3.jpg)
-   
- 4. 点击创建接口，`API`名称用来描述接口左右，`API url`用来调用数据，都是必填。如图，我们创建一个接口 `testapi` 点击预览按钮可以格式化json数据，不过功能不丰富，建议使用网上更完整的工具预览，可以快速定位格式错误。
- 
+
+ 4. 点击创建接口，`API`名称用来描述接口左右，`API url`用来调用数据，都是必填。如图，我们创建一个接口 `testapi` 可以实时预览json格式，可以快速定位格式错误。也可以借助网上更多的格式化工具。
+
     ![image](https://github.com/kliuj/local-ajax-api/blob/master/jsonServer/public/images/4.jpg)
-    
+
     创建完成点击最下面的保存按钮，提示保存成功就完成了接口的创建！
-    
+
     ![image](https://github.com/kliuj/local-ajax-api/blob/master/jsonServer/public/images/5.jpg)
 
  5. 使用接口，根据刚刚创建的`url：testapi` 生成一个链接  http://localhost:3000/getjson/testapi
@@ -59,7 +67,7 @@
 
  8. 注意：`ajaxapilist.json` 存着一张关系表，对应所有的接口描述名称和`url`，用于查询，建议不要修改，
 
-   
+
 
 ## 总结 ##
 本文是我对前后端合作开发过程中的一个思考！
