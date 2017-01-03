@@ -67,7 +67,7 @@ module.exports = function(app){
 			res.header("Access-Control-Allow-Origin", "*");
 			res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
 			res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-	  	res.json(JSON.parse(response).detail)
+	  	res.json(JSON.parse(JSON.parse(response).detail))
 	  }).catch(function(response){
 	  	res.render('noresult')
 	  })
