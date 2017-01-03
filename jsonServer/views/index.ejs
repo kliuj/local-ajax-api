@@ -1,5 +1,5 @@
 <div class="index">
-	<%if(haveList){%>
+	<%if(haveList && list.length > 0){%>
 		<div style="height:60px;line-height:60px;font-size:25px;">接口列表</div>
 		<ul class="searchlist">
 			<%list.forEach(function(item,index){%>
@@ -8,6 +8,7 @@
 						<p><%= item.name%></p>
 						<a href="/getjson/<%=item.url%>" target="_blank" class="view act">查看结果</a>
 						<a href="/edit/<%=item.url%>" target="_blank" class="view act">重新编辑</a>
+						<a href="javascript:;" data-id="<%=item.url%>" class="view act delete">删除接口</a>
 					</div>
 				</li>
 			<%})%>
@@ -15,5 +16,25 @@
 	<%}else{%>
 		<p>本地没有找到任何已存在接口，点击右上角创建一个新接口</p>
 	<%}%>
-
 </div>
+<script>
+	$(".delete").on('click',function(e){
+		var _id = $(e.currentTarget).data("id");
+		if(confirm("确定删除吗？")){
+			$.ajax({
+				url:'/delete',
+				type:'post',
+				data:{
+					url:_id
+				},
+				success:function(data){
+					if(data.code === 0) location.reload()
+				},
+				error:function(){
+					alert("出错了")
+				}
+			})
+		}
+
+	})
+</script>

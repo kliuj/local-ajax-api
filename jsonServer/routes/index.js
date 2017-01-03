@@ -5,7 +5,7 @@
 
 var fs = require('fs')
 
-function saveName(name,url){
+function saveName(name,url,idDel){
 	//存储文件名和url到ajaxapilist文件
 	var jsonName = './public/jsonfile/ajaxapilist.json',
 			read = new Promise(function(resolve,reject){
@@ -15,7 +15,7 @@ function saveName(name,url){
 	var _write = new Promise(function(resolve,reject){
 			read.then(function(response){
 				var list  = JSON.parse(response).dataList,
-						new_arr = [{"name":name,"url":url}];
+						new_arr =idDel ? [] : [{"name":name,"url":url}];//如果是删除则不需要这个新的数据
 				//合并json
 				if(list){
 					for(var i = 0;i<list.length;i++){
@@ -170,6 +170,22 @@ module.exports = function(app){
 			}
 		}).catch(function(response){
 			res.json({ repeat: false,success:true})
+		})
+	})
+	//删除接口
+	app.post("/delete",function(req,res){
+		var jsonUrl = req.body.url.replace(/\s/g,""),
+				jsonName = './public/jsonfile/'+jsonUrl+'.json',
+				del = new Promise(function(resolve,reject){
+					resolve(fs.unlinkSync(jsonName))
+				});
+		saveName(jsonName,jsonUrl,true)
+		del.then(function(response){
+			console.log('ok')
+			res.json({ code: 0,success:true})
+		}).catch(function(e){
+			console.log(e)
+			res.json({ code: 1,success:false,info:e})
 		})
 	})
 }

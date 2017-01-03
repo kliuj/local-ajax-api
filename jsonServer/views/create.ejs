@@ -81,22 +81,20 @@
 <script>
 	//记录被改变状态
 	var changed = true;
-	// document.getElementById("view-btn").addEventListener("click",function(){
-	// 	var _dom = document.getElementById("eT")
-	// 			stringValue = null;
-	// 	try{
-	// 		stringValue = JSON.parse(_dom.value);
-	// 	}
-	// 	catch(err){
- // 			_dom.select(); // 选择对象
-  // 		document.execCommand("Copy"); // 执行浏览器复制命令
-	// 		if(confirm("json格式有误，已复制到剪贴板，是否去检查格式?")){
-	// 			window.open("http://www.bejson.com/")
-	// 		}
-	// 		return false
-	// 	}
-	// 	document.getElementById("result").innerHTML = syntaxHighlight(stringValue)
-	// })
+	var _dom = document.getElementById("eT");
+	function checkJSON(stringValue){
+		try{
+			stringValue = JSON.parse(stringValue);
+		}
+		catch(err){
+ 			_dom.select(); // 选择对象
+  		document.execCommand("Copy"); // 执行浏览器复制命令
+			if(confirm("json格式有误，已复制到剪贴板，是否去检查格式?")){
+				window.open("http://www.bejson.com/")
+			}
+			return false
+		}
+	}
 	function checkApiUrl(oldUrl) {
 		var apiurl = document.getElementById("apiurl").value.replace(/\s/g,"")
 		$.ajax({
