@@ -16,7 +16,7 @@
 		<%if(isEdit){%>
 			<input type="text" id="apiurl" class="nameinput" value="<%=stringValueJson.url%>" onblur="checkApiUrl(<%=stringValueJson.url%>)">
 		<%}else{%>
-			<input type="text" id="apiurl" onblur="checkApiUrl()" class="nameinput" placeholder="英文APIurl，用于获取数据，http://localhost:3000/getjson/APIurl，不能重复" >
+			<input type="text" id="apiurl" onblur="checkApiUrl()" class="nameinput" placeholder="只需要填写英文APIurl，用于获取数据，最终地址为“http://localhost:3000/getjson/APIurl”，不能重复" >
 		<%}%>
 	</div>
 </div>
