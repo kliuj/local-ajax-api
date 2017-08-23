@@ -1,11 +1,18 @@
 
 /*
- * GET home page.
+ * routers
  */
 
 var fs = require('fs')
-
-function saveName(name,url,idDel){
+//保存到关系表
+/*
+*{
+	name:'显示名称',
+	url:'实际的接口url'
+	multi:'是否是多层级url'
+}
+*/
+function saveName(obj){
 	//存储文件名和url到ajaxapilist文件
 	var jsonName = './public/jsonfile/ajaxapilist.json',
 			read = new Promise(function(resolve,reject){
@@ -15,12 +22,12 @@ function saveName(name,url,idDel){
 	var _write = new Promise(function(resolve,reject){
 			read.then(function(response){
 				var list  = JSON.parse(response).dataList,
-						new_arr =idDel ? [] : [{"name":name,"url":url}];//如果是删除则不需要这个新的数据
+						new_arr =obj.del ? [] : [{"name":obj.name,"url":obj.url,multi:obj.multi || false}];//如果是删除则不需要这个新的数据
 				//合并json
 				if(list){
 					for(var i = 0;i<list.length;i++){
 						//比较url，url不能重复
-						if(url != list[i].url){
+						if(obj.url != list[i].url){
 							new_arr.push(list[i])
 							continue ;
 						}
@@ -28,7 +35,8 @@ function saveName(name,url,idDel){
 				}
 				resolve(fs.writeFileSync(jsonName,JSON.stringify({"warn":"存放所有的关系表，建议不要手动修改","dataList":new_arr})))
 			}).catch(function(response){
-				resolve(fs.writeFileSync(jsonName,JSON.stringify({"warn":"存放所有的关系表，建议不要手动修改","dataList":[{"name":name,"url":url}]})))
+				console.log('reset')
+				resolve(fs.writeFileSync(jsonName,JSON.stringify({"warn":"存放所有的关系表，建议不要手动修改","dataList":[{"name":obj.name,"url":obj.url}]})))
 			})
 	})
 	_write.then(function(){
@@ -37,6 +45,22 @@ function saveName(name,url,idDel){
 
 	})
 }
+//处理多级url
+function urlToName(url){
+	//multi 代表多级url
+		var multi = false
+		if(/\//.test(url)){
+			multi = true
+		}
+		return {
+			fileName: url.replace(/\//g,"."),
+			url: url,
+			multi: multi
+		}
+}
+
+
+
 module.exports = function(app){
 	//接口首页
 	app.get('/',function(req,res){
@@ -55,11 +79,12 @@ module.exports = function(app){
 		  	res.render('index', { haveList: false, list:[]})
 		  })
 	})
-	//获取一个数据文件
-	app.get('/getjson/:jsonUrl',function(req,res){
+	//获取一个数据文件 (处理多级url)
+	app.get('/getjson/*',function(req,res){
 	  //文件名称
-	  var jsonUrl = req.params.jsonUrl,
-	  	  jsonName = './public/jsonfile/'+jsonUrl+'.json';
+	  var jsonUrl = urlToName(req.params[0]),
+	  	  jsonName = './public/jsonfile/'+jsonUrl.fileName+'.json';
+	  	  console.log(jsonUrl)
 	  var read = new Promise(function(resolve,reject){
 	  		resolve(fs.readFileSync(jsonName))
 	  });
@@ -79,16 +104,16 @@ module.exports = function(app){
 	//存储json
 	app.post('/save',function(req,res){
 		//文件名称 是url 英文。便于调用 ；fileName只是描述内容
-	  var fileName = req.body.name.replace(/\s/g,""),
-	  	  jsonUrl = req.body.url.replace(/\s/g,""),
+	  var urlName = req.body.name.replace(/\s/g,""),
+	  	  jsonUrl = urlToName(req.body.url.replace(/\s/g,"")),
 	  	  jsonString = req.body.data,
-	  	  jsonName = './public/jsonfile/'+jsonUrl+'.json';
-	  if(fileName && jsonUrl){
+	  	  jsonName = './public/jsonfile/'+jsonUrl.fileName+'.json';
+	  if(urlName && jsonUrl){
 	  	var read = new Promise(function(resolve,reject){
 		  		resolve(fs.writeFileSync(jsonName,jsonString))
 		  });
 			//把新的关系表保存到ajaxapilist
-			saveName(fileName,jsonUrl)
+			saveName({name:urlName,url:jsonUrl.url,multi:jsonUrl.multi})
 		  read.then(function(response){
 		  	res.json({success:true,message:"保存成功"})
 		  }).catch(function(response){
@@ -101,10 +126,10 @@ module.exports = function(app){
 
 	})
 	//编辑接口页面
-	app.get('/edit/:jsonUrl',function(req,res){
+	app.get('/edit/*',function(req,res){
 			//文件名称其实就是url最后的参数
-		  var jsonUrl = req.params.jsonUrl,
-		  	  jsonName = './public/jsonfile/'+jsonUrl+'.json';
+	     var jsonUrl = urlToName(req.params[0]),
+  	  		 jsonName = './public/jsonfile/'+jsonUrl.fileName+'.json';
 		  if(!jsonUrl){
 		  	res.redirect('/')
 		  }else{
@@ -174,12 +199,13 @@ module.exports = function(app){
 	})
 	//删除接口
 	app.post("/delete",function(req,res){
-		var jsonUrl = req.body.url.replace(/\s/g,""),
-				jsonName = './public/jsonfile/'+jsonUrl+'.json',
+		var jsonUrl = urlToName(req.body.url.replace(/\s/g,"")),
+				jsonName = './public/jsonfile/'+jsonUrl.fileName+'.json',
 				del = new Promise(function(resolve,reject){
 					resolve(fs.unlinkSync(jsonName))
 				});
-		saveName(jsonName,jsonUrl,true)
+		// saveName({name:jsonName,url:jsonUrl.url,del:true})
+		saveName({name:jsonName,url:jsonUrl.url,multi:jsonUrl.multi,del:true})
 		del.then(function(response){
 			console.log('ok')
 			res.json({ code: 0,success:true})
@@ -188,4 +214,24 @@ module.exports = function(app){
 			res.json({ code: 1,success:false,info:e})
 		})
 	})
+	//多级url
+	// app.get('/getjson/*',function(req,res){
+	//   //文件名称
+
+	//   var jsonUrl = rreq.params[0];
+	//   // if(jsonUrl.)
+	//   var jsonName = './public/jsonfile/'+jsonUrl+'.json';
+	//   	  console.log(jsonUrl)
+	//   var read = new Promise(function(resolve,reject){
+	//   		resolve(fs.readFileSync(jsonName))
+	//   });
+	//   read.then(function(response){
+	// 		res.header("Access-Control-Allow-Origin", "*");
+	// 		res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+	// 		res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+	//   	res.json(JSON.parse(JSON.parse(response).detail))
+	//   }).catch(function(response){
+	//   	res.render('noresult')
+	//   })
+	// })
 }

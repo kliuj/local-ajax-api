@@ -97,7 +97,7 @@ ul,li{
 	display: inline-block;
 }
 .item{
-	height:100px;
+	height:150px;
 	width: 380px;
 	background-color: #75caf4;
 	display: block;
@@ -112,6 +112,7 @@ ul,li{
   width: 360px;
   height: 50px;
   line-height: 50px;
+  text-align:center;
 }
 .view{
   color:#fff;
